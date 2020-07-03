@@ -32,4 +32,4 @@ All other code/media are released under the [MIT Licence][license].
 [alfred]: http://www.alfredapp.com/
 [alfred-workflow]: http://www.deanishe.net/alfred-workflow/
 [license]: src/LICENSE.txt
-[sample]: https://raw.github.com/lukewaite/alfred-kibana/master/docs/sample.png
+[sample]: https://raw.github.com/lukewaite/alfred-datadog/master/docs/sample.png
