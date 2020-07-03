@@ -1,4 +1,4 @@
-# Alfred Kibana
+# Alfred DataDog
 
 Quickly navigate to Datadog Saved Views in [Alfred][alfred].
 
