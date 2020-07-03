@@ -3,11 +3,24 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>com.lukewaite.alfred-kibana</string>
+	<string>com.lukewaite.alfred-datadog</string>
 	<key>category</key>
 	<string>Tools</string>
 	<key>connections</key>
 	<dict>
+		<key>33C43D46-9291-45B2-9B75-5B3B2B074E67</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>18449AF7-1BEF-45B4-89CE-47BFAC57468A</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>5B1D4704-152C-43DE-8759-5E240EC5A6AB</key>
 		<array>
 			<dict>
@@ -34,11 +47,50 @@
 				<false/>
 			</dict>
 		</array>
+		<key>995BDC49-7FEE-4E34-A334-4EF211CE2CD5</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>33C43D46-9291-45B2-9B75-5B3B2B074E67</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>B6427010-7B56-4342-B5AC-85D22C5E5C50</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>A62E393E-7B4C-4097-90D8-01F20E5FF67D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>DC99010A-E929-43EC-A4F9-51110D4C25F0</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1FECA607-A4BB-4516-808B-252C0B564E6B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>E4204FB7-4ED0-456E-8C0E-F5E9A78F8F3F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>DC99010A-E929-43EC-A4F9-51110D4C25F0</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -55,56 +107,9 @@
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>Kibana</string>
+	<string>Datadog</string>
 	<key>objects</key>
 	<array>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>keyword</key>
-				<string>log</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<true/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Fetching Kibana searches...</string>
-				<key>script</key>
-				<string>python workflow.py "{query}"</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>subtext</key>
-				<string></string>
-				<key>title</key>
-				<string>Search for Kibana saved searches</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>5B1D4704-152C-43DE-8759-5E240EC5A6AB</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -127,44 +132,51 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
 				<key>keyword</key>
-				<string>logseturl</string>
+				<string>ddlog</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Fetching Datadog searches...</string>
+				<key>script</key>
+				<string>python workflow.py "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>subtext</key>
-				<string>Enter your Kibana URL and hit ENTER</string>
-				<key>text</key>
-				<string>Set your Kibana URL</string>
+				<string></string>
+				<key>title</key>
+				<string>Search for DataDog saved searches</string>
+				<key>type</key>
+				<integer>0</integer>
 				<key>withspace</key>
 				<true/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
+			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>7DD49BD6-5445-4547-B438-E8B21E93DAE5</string>
+			<string>5B1D4704-152C-43DE-8759-5E240EC5A6AB</string>
 			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<false/>
-				<key>removeextension</key>
-				<false/>
-				<key>text</key>
-				<string>Your Kibana URL has been saved.</string>
-				<key>title</key>
-				<string>Saved API URL</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
-			<string>A62E393E-7B4C-4097-90D8-01F20E5FF67D</string>
-			<key>version</key>
-			<integer>1</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -189,14 +201,212 @@
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>ddlogseturl</string>
+				<key>subtext</key>
+				<string>Enter your DataDog URL and hit ENTER eg app.datadoghq.com</string>
+				<key>text</key>
+				<string>Set your DataDog URL</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>7DD49BD6-5445-4547-B438-E8B21E93DAE5</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>Your Datadog API URL has been saved.</string>
+				<key>title</key>
+				<string>Saved API URL</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>A62E393E-7B4C-4097-90D8-01F20E5FF67D</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>python workflow.py --setshard "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>33C43D46-9291-45B2-9B75-5B3B2B074E67</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>Your Datadog Shard has been saved.</string>
+				<key>title</key>
+				<string>Saved Datadog Shard</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>18449AF7-1BEF-45B4-89CE-47BFAC57468A</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>ddlogsetshard</string>
+				<key>subtext</key>
+				<string>Enter your DataDog shard and hit ENTER eg 123</string>
+				<key>text</key>
+				<string>Set your DataDog shard</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>995BDC49-7FEE-4E34-A334-4EF211CE2CD5</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>Your Datadog Shard has been saved.</string>
+				<key>title</key>
+				<string>Saved Datadog Shard</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>1FECA607-A4BB-4516-808B-252C0B564E6B</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>ddlogsetauth</string>
+				<key>subtext</key>
+				<string>Enter your DataDog Auth Cookie and hit ENTER</string>
+				<key>text</key>
+				<string>Set your DataDog Auth Cookie</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>E4204FB7-4ED0-456E-8C0E-F5E9A78F8F3F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>python workflow.py --setauth "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>DC99010A-E929-43EC-A4F9-51110D4C25F0</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string>Setup and Usage
 
-* Tell it where the Kibana API you want to connect to is by running `logseturl http://my-kibana-host.com`
-* search for saved searches with `logs &lt;search&gt;`</string>
+You will need to get an auth token and your datadog shard out of your cookies.
+* Open an incognito window and login to DataDog.
+* Open Developer Tools and go to cookies
+* You are looking for two cookies. `DD-PSHARD` and `dogweb`.
+* Copy the contents of `DD-PSHARD` and run `ddlogsetshard &lt;number&gt;` ie... `ddlogsetshard 123`
+* Copy the contents of `dogweb` and run `ddlogsetauth &lt;auth token&gt;`
+* Set your datadog url: `ddlogseturl app.datadoghq.com` or `ddlogseturl app.datadoghq.eu`</string>
 	<key>uidata</key>
 	<dict>
+		<key>18449AF7-1BEF-45B4-89CE-47BFAC57468A</key>
+		<dict>
+			<key>xpos</key>
+			<integer>545</integer>
+			<key>ypos</key>
+			<integer>390</integer>
+		</dict>
+		<key>1FECA607-A4BB-4516-808B-252C0B564E6B</key>
+		<dict>
+			<key>xpos</key>
+			<integer>550</integer>
+			<key>ypos</key>
+			<integer>535</integer>
+		</dict>
+		<key>33C43D46-9291-45B2-9B75-5B3B2B074E67</key>
+		<dict>
+			<key>xpos</key>
+			<integer>335</integer>
+			<key>ypos</key>
+			<integer>390</integer>
+		</dict>
 		<key>5B1D4704-152C-43DE-8759-5E240EC5A6AB</key>
 		<dict>
 			<key>xpos</key>
@@ -207,7 +417,14 @@
 		<key>7DD49BD6-5445-4547-B438-E8B21E93DAE5</key>
 		<dict>
 			<key>xpos</key>
-			<integer>110</integer>
+			<integer>105</integer>
+			<key>ypos</key>
+			<integer>230</integer>
+		</dict>
+		<key>995BDC49-7FEE-4E34-A334-4EF211CE2CD5</key>
+		<dict>
+			<key>xpos</key>
+			<integer>105</integer>
 			<key>ypos</key>
 			<integer>390</integer>
 		</dict>
@@ -221,18 +438,34 @@
 		<key>A62E393E-7B4C-4097-90D8-01F20E5FF67D</key>
 		<dict>
 			<key>xpos</key>
-			<integer>550</integer>
+			<integer>545</integer>
 			<key>ypos</key>
-			<integer>390</integer>
+			<integer>230</integer>
 		</dict>
 		<key>B6427010-7B56-4342-B5AC-85D22C5E5C50</key>
 		<dict>
 			<key>xpos</key>
+			<integer>335</integer>
+			<key>ypos</key>
+			<integer>230</integer>
+		</dict>
+		<key>DC99010A-E929-43EC-A4F9-51110D4C25F0</key>
+		<dict>
+			<key>xpos</key>
 			<integer>340</integer>
 			<key>ypos</key>
-			<integer>390</integer>
+			<integer>535</integer>
+		</dict>
+		<key>E4204FB7-4ED0-456E-8C0E-F5E9A78F8F3F</key>
+		<dict>
+			<key>xpos</key>
+			<integer>110</integer>
+			<key>ypos</key>
+			<integer>535</integer>
 		</dict>
 	</dict>
+	<key>variablesdontexport</key>
+	<array/>
 	<key>version</key>
 	<string>0.1.0</string>
 	<key>webaddress</key>
