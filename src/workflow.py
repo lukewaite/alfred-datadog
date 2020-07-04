@@ -85,7 +85,7 @@ def main(wf):
     query = args.query
 
     saved_searches = wf.cached_data('saved_searches', None, max_age=0)
-    dashboards = wf.cached_data('dashboards', None, max_age=0)
+    traces = wf.cached_data('traces', None, max_age=0)
 
     if wf.update_available:
         # Add a notification to top of Script Filter results
@@ -108,16 +108,22 @@ def main(wf):
         run_in_background('update', cmd)
         wf.rerun = 0.5
 
+    # Start update script if cached data is too old (or doesn't exist)
+    if not wf.cached_data_fresh('traces', max_age=3600) and not is_running('update'):
+        cmd = ['/usr/bin/python', wf.workflowfile('update.py')]
+        run_in_background('update', cmd)
+        wf.rerun = 0.5
+
     # If script was passed a query, use it to filter projects
     if query and saved_searches:
         saved_searches = wf.filter(query, saved_searches, key=search_for_item, min_score=20)
 
-    # # If script was passed a query, use it to filter projects
-    # if query and dashboards:
-    #     dashboards = wf.filter(query, dashboards, key=search_for_item, min_score=20)
+    # If script was passed a query, use it to filter projects
+    if query and traces:
+        traces = wf.filter(query, traces, key=search_for_item, min_score=20)
 
-    if not dashboards and not saved_searches:
-        wf.add_item('No saved searches or dashboards found', icon=ICON_WARNING)
+    if not traces and not saved_searches:
+        wf.add_item('No saved log views or traces found', icon=ICON_WARNING)
         wf.send_feedback()
         return 0
 
@@ -131,16 +137,17 @@ def main(wf):
                     valid=True,
                     icon=None,
                     uid=search['id'])
-    #
-    # # Loop through the returned posts and add an item for each to
-    # # the list of results for Alfred
-    # for dashboard in dashboards:
-    #     wf.add_item(title=dashboard['attributes']['title'],
-    #                 # subtitle=project['path_with_namespace'],
-    #                 arg=wf.settings['api_url'] + '/app/kibana#/dashboard/' + dashboard['id'],
-    #                 valid=True,
-    #                 icon=None,
-    #                 uid=dashboard['id'])
+
+    # Loop through the returned traces and add an item for each to
+    # the list of results for Alfred
+    for trace in traces:
+        wf.add_item(title=trace['name'],
+                    subtitle=trace['search'],
+                    # subtitle=project['path_with_namespace'],
+                    arg="https://{api_url}/apm/traces?saved_view={view_id}".format(api_url=wf.settings['api_url'], view_id=trace['id']),
+                    valid=True,
+                    icon=None,
+                    uid=trace['id'])
 
     # Send the results to Alfred as XML
     wf.send_feedback()
