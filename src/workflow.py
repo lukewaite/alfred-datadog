@@ -14,6 +14,12 @@ def search_for_item(project):
     elements.append(project['name'])
     return u' '.join(elements)
 
+def check_for_limit(limit, limiter):
+    if limiter is None or limiter == limit:
+        return True
+
+    return False
+
 def main(wf):
     # build argument parser to parse script args and collect their
     # values
@@ -21,6 +27,7 @@ def main(wf):
     parser.add_argument('--seturl', dest='apiurl', nargs='?', default=None)
     parser.add_argument('--setshard', dest='shard', nargs='?', default=None)
     parser.add_argument('--setauth', dest='auth', nargs='?', default=None)
+    parser.add_argument('--search', dest='search', nargs='?', default=None)
     parser.add_argument('query', nargs='?', default=None)
     # parse the script's arguments
     args = parser.parse_args(wf.args)
@@ -79,13 +86,14 @@ def main(wf):
         return 0
 
     ####################################################################
-    # View/filter DataDog Saved Discovery Pages
+    # Ensure we have data
     ####################################################################
 
     query = args.query
 
     saved_searches = wf.cached_data('saved_searches', None, max_age=0)
     traces = wf.cached_data('traces', None, max_age=0)
+    apm = wf.cached_data('apm', None, max_age=0)
 
     if wf.update_available:
         # Add a notification to top of Script Filter results
@@ -114,13 +122,27 @@ def main(wf):
         run_in_background('update', cmd)
         wf.rerun = 0.5
 
+    # Start update script if cached data is too old (or doesn't exist)
+    if not wf.cached_data_fresh('apm', max_age=3600) and not is_running('update'):
+        cmd = ['/usr/bin/python', wf.workflowfile('update.py')]
+        run_in_background('update', cmd)
+        wf.rerun = 0.5
+
+    ####################################################################
+    # View/filter DataDog Saved Discovery Pages
+    ####################################################################
+
     # If script was passed a query, use it to filter projects
-    if query and saved_searches:
+    if query and traces and check_for_limit('logs', args.search):
         saved_searches = wf.filter(query, saved_searches, key=search_for_item, min_score=20)
 
     # If script was passed a query, use it to filter projects
-    if query and traces:
+    if query and traces and check_for_limit('traces', args.search):
         traces = wf.filter(query, traces, key=search_for_item, min_score=20)
+
+    # If script was passed a query, use it to filter projects
+    if query and apm and check_for_limit('apm', args.search):
+        apm = wf.filter(query, apm, key=search_for_item, min_score=20)
 
     if not traces and not saved_searches:
         wf.add_item('No saved log views or traces found', icon=ICON_WARNING)
@@ -129,25 +151,39 @@ def main(wf):
 
     # Loop through the returned posts and add an item for each to
     # the list of results for Alfred
-    for search in saved_searches:
-        wf.add_item(title=search['name'],
-                    subtitle=search['search'],
-                    # subtitle=project['path_with_namespace'],
-                    arg="https://{api_url}/logs?saved_view={view_id}".format(api_url=wf.settings['api_url'], view_id=search['id']),
-                    valid=True,
-                    icon=None,
-                    uid=search['id'])
+    if check_for_limit('logs', args.search):
+        for search in saved_searches:
+            wf.add_item(title=search['name'],
+                        subtitle=search['search'],
+                        # subtitle=project['path_with_namespace'],
+                        arg="https://{api_url}/logs?saved_view={view_id}".format(api_url=wf.settings['api_url'], view_id=search['id']),
+                        valid=True,
+                        icon=None,
+                        uid=search['id'])
 
     # Loop through the returned traces and add an item for each to
     # the list of results for Alfred
-    for trace in traces:
-        wf.add_item(title=trace['name'],
-                    subtitle=trace['search'],
-                    # subtitle=project['path_with_namespace'],
-                    arg="https://{api_url}/apm/traces?saved_view={view_id}".format(api_url=wf.settings['api_url'], view_id=trace['id']),
-                    valid=True,
-                    icon=None,
-                    uid=trace['id'])
+    if check_for_limit('traces', args.search):
+        for trace in traces:
+            wf.add_item(title=trace['name'],
+                        subtitle=trace['search'],
+                        # subtitle=project['path_with_namespace'],
+                        arg="https://{api_url}/apm/traces?saved_view={view_id}".format(api_url=wf.settings['api_url'], view_id=trace['id']),
+                        valid=True,
+                        icon=None,
+                        uid=trace['id'])
+
+    # Loop through the returned traces and add an item for each to
+    # the list of results for Alfred
+    if check_for_limit('apm', args.search):
+        for service in apm:
+            wf.add_item(title="APM: {service}".format(service=service['service']),
+                        # subtitle=trace['search'],
+                        # subtitle=project['path_with_namespace'],
+                        arg="https://{api_url}/apm/service/{service_name}".format(api_url=wf.settings['api_url'], service_name=service['service']),
+                        valid=True,
+                        icon=None,
+                        uid=service['service'])
 
     # Send the results to Alfred as XML
     wf.send_feedback()
